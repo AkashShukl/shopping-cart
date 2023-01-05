@@ -1,10 +1,12 @@
 import React from "react";
 
-const App = () =>{
+const App = () => {
+    // const num: number  = 23;
+
     return (
-        <h1>
+        <div>
             Hello world! I am using React
-        </h1>
+        </div>
     )
 }
 
