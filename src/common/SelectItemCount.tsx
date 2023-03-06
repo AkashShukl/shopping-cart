@@ -7,8 +7,6 @@ interface SelectItemCountProps {
 }
 
 const SelectItemCount = ({ quantity, setQuantity }: SelectItemCountProps) => {
-  const [isOpen, setIsOpen] = useState(false)
-
   const handleIncrement = () => {
     setQuantity(quantity + 1)
   }
@@ -19,11 +17,7 @@ const SelectItemCount = ({ quantity, setQuantity }: SelectItemCountProps) => {
     }
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const count = Number(event.target.value)
-    setQuantity(count)
-  }
-
+  console.log('Rerender quantity: ', quantity)
   return (
     <div className="relative">
       <span

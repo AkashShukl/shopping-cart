@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../../api/productApi'
 import { Product } from '../../common/types/productType'
@@ -6,77 +6,31 @@ import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { price } from '../../common/helper'
 import SelectItemCount from '../../common/SelectItemCount'
+import { addItemToCart } from '../../redux/cartSlice'
+import { useAppDispatch } from '../../redux/hooks'
 
 type productViewParams = {
   id: string | undefined
 }
 
-const product = {
-  name: 'Basic Tee 6-Pack',
-  price: '$192',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Men', href: '#' },
-    { id: 2, name: 'Clothing', href: '#' },
-  ],
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-  colors: [
-    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: false },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: '2XL', inStock: true },
-    { name: '3XL', inStock: true },
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton',
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-}
-const reviews = { href: '#', average: 4, totalCount: 117 }
-
 export default function ProuctView() {
-  const { id } = useParams<productViewParams>()
-  const [item, setItem] = useState<Product>()
-  const [quantity, setQuantity] = useState(1)
+  const dispatch = useAppDispatch()
 
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const { id } = useParams<productViewParams>()
+  const [item, setItem] = useState<Product>({ qty: 1 } as Product)
+
+  const setQuantity = (count: number) => {
+    setItem((item) => ({ ...item, qty: (item.qty || 1) + 1 }))
+  }
+
+  const addToCart = () => {
+    dispatch(addItemToCart(item))
+  }
 
   useEffect(() => {
     async function fetchData() {
       const data: Product = await getProductById(parseInt(id || '0'))
-      setItem(data)
+      setItem({ ...data, qty: 1 })
     }
     fetchData()
   }, [])
@@ -84,15 +38,15 @@ export default function ProuctView() {
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
   }
-  console.log(item)
+
   return (
     <div className="mx-auto mt-6 max-w-2xl bg-white sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
       <div className="product-showcase ">
         <div className="aspect-w-4 aspect-h-5 lg:aspect-w-3 lg:aspect-h-4 sm:overflow-hidden sm:rounded-lg">
           <img
             src={item?.image}
-            alt={product.images[3].alt}
-            className="h-full w-full object-cover object-center"
+            alt={'product images'}
+            className="h-50% w-50% object-cover object-center"
           />
         </div>
       </div>
@@ -125,7 +79,7 @@ export default function ProuctView() {
             </div>
             <p className="sr-only">{item?.rating?.rate} out of 5 stars</p>
             <a
-              href={reviews.href}
+              // href={reviews.href}
               className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
             >
               {item?.rating?.count} reviews
@@ -140,11 +94,12 @@ export default function ProuctView() {
           </div>
         </div>
 
-        <SelectItemCount quantity={quantity} setQuantity={setQuantity} />
+        <SelectItemCount quantity={item?.qty || 1} setQuantity={setQuantity} />
 
         <button
           type="submit"
           className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          onClick={addToCart}
         >
           Add to cart
         </button>

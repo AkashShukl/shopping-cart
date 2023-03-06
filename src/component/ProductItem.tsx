@@ -5,49 +5,49 @@ import { price } from '../common/helper'
 import { Product } from '../common/types/productType'
 
 interface ProductProps {
-    product: Product
+  product: Product
 }
 
 export default function ProductItem({ product }: ProductProps) {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-    function addToCart(productId: number) {
-        console.log(productId)
-    }
+  function addToCart(productId: number) {
+    console.log(productId)
+  }
 
-    function navigateToProduct(productId: number) {
-        console.log('navigating to product', productId)
-        navigate(`/product/${productId}`)
-    }
+  function navigateToProduct(productId: number) {
+    console.log('navigating to product', productId)
+    navigate(`/product/${productId}`)
+  }
 
-    return (
-        <div
-            key={product.id}
-            className="group flex flex-col justify-end rounded border p-2"
-        >
-            <div
-                onClick={() => navigateToProduct(product.id)}
-                className="aspect-w-1 aspect-h-1 xl:aspect-w-7 xl:aspect-h-8 w-full overflow-hidden rounded-lg "
-            >
-                <img
-                    src={product.image}
-                    alt={product.title}
-                    className=" h-48  w-96 object-scale-down
+  return (
+    <div
+      key={product.id}
+      className="group flex flex-col justify-end rounded border p-2 hover:cursor-pointer"
+    >
+      <div
+        onClick={() => navigateToProduct(product.id)}
+        className="aspect-w-1 aspect-h-1 xl:aspect-w-7 xl:aspect-h-8 w-full overflow-hidden rounded-lg "
+      >
+        <img
+          src={product.image}
+          alt={product.title}
+          className=" h-48  w-96 object-scale-down
                   group-hover:opacity-75"
-                />
-            </div>
-            <h3 className="mt-4  text-sm text-gray-500">{product.title}</h3>
-            <p className="mt-1 text-lg font-medium text-gray-900">
-                {price(product.price)}
-            </p>
+        />
+      </div>
+      <h3 className="mt-4  text-sm text-gray-500">{product.title}</h3>
+      <p className="mt-1 text-lg font-medium text-gray-900">
+        {price(product.price)}
+      </p>
 
-            <Button
-                type="button"
-                //  className="hover:opacity-7 inset-x-0 bottom-0 w-full rounded bg-gray-200 px-2 py-1 text-sm font-medium"
-                onClick={() => addToCart(product?.id)}
-            >
-                Add To Cart
-            </Button>
-        </div>
-    )
+      <Button
+        type="button"
+        //  className="hover:opacity-7 inset-x-0 bottom-0 w-full rounded bg-gray-200 px-2 py-1 text-sm font-medium"
+        onClick={() => addToCart(product?.id)}
+      >
+        Add To Cart
+      </Button>
+    </div>
+  )
 }

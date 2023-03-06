@@ -9,6 +9,9 @@ import {
 
 import { navigation } from '../../constants'
 import MobileNav from './MobileNav'
+import { Link } from 'react-router-dom'
+import { useAppSelector } from '../../redux/hooks'
+import { selectCartItems } from '../../redux/cartSlice'
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -16,6 +19,7 @@ function classNames(...classes: any) {
 
 export default function Example() {
   const [open, setOpen] = useState(false)
+  const cartItems = useAppSelector(selectCartItems)
 
   return (
     <div className="bg-white">
@@ -43,16 +47,15 @@ export default function Example() {
               </button>
 
               {/* Logo */}
-              <div className="ml-4 flex lg:ml-0">
+              {/* <div className="ml-4 flex lg:ml-0">
                 <a href="#">
-                  <span className="sr-only">Your Company</span>
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""
                   />
                 </a>
-              </div>
+              </div> */}
 
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
@@ -201,11 +204,11 @@ export default function Example() {
                     className="flex items-center text-gray-700 hover:text-gray-800"
                   >
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_India.png/1024px-Flag_of_India.png"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
-                    <span className="ml-3 block text-sm font-medium">CAD</span>
+                    <span className="ml-3 block text-sm font-medium">IND</span>
                     <span className="sr-only">, change currency</span>
                   </a>
                 </div>
@@ -223,16 +226,15 @@ export default function Example() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link to="/cart" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
+                    <span className="ml-1 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                      {cartItems.length}
                     </span>
-                    <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
