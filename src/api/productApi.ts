@@ -3,13 +3,13 @@ import { Product } from "../common/types/productType";
 
 
 export const getProducts = async ():Promise<Product[]> => {
-  // const url = "https://fakestoreapi.com/products";
-  // try {
-  //   const response = await axios.get(url);
-  //   return response.data;
-  // } catch (error) {
-  //   console.error(error);
-  // }
+//   const url = "https://fakestoreapi.com/products";
+//   try {
+//     const response = await axios.get(url);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//   }
   return [
     {
         "id": 1,

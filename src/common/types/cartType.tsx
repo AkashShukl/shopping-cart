@@ -1,8 +1,8 @@
+import { Product } from './productType'
+
 export type CartItem = {
   id: number
-  name: string
-  price: number
+  product: Product
   discount: number
   netPrice: number
-  qty: number
 }
