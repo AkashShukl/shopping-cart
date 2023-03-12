@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../common/Button'
 import { price } from '../common/helper'
 import { Product } from '../common/types/productType'
+import { addItemToCart } from '../redux/cartSlice'
+import { useAppDispatch } from '../redux/hooks'
 
 interface ProductProps {
   product: Product
@@ -10,13 +12,13 @@ interface ProductProps {
 
 export default function ProductItem({ product }: ProductProps) {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  function addToCart(productId: number) {
-    console.log(productId)
+  function addToCart(product: Product) {
+    dispatch(addItemToCart(product))
   }
 
   function navigateToProduct(productId: number) {
-    console.log('navigating to product', productId)
     navigate(`/product/${productId}`)
   }
 
@@ -44,7 +46,7 @@ export default function ProductItem({ product }: ProductProps) {
       <Button
         type="button"
         //  className="hover:opacity-7 inset-x-0 bottom-0 w-full rounded bg-gray-200 px-2 py-1 text-sm font-medium"
-        onClick={() => addToCart(product?.id)}
+        onClick={() => addToCart(product)}
       >
         Add To Cart
       </Button>

@@ -1,10 +1,16 @@
+import { XMarkIcon } from '@heroicons/react/20/solid'
 import React from 'react'
 import { price } from '../../common/helper'
 import { CartItem } from '../../common/types/cartType'
 import { Product } from '../../common/types/productType'
 
-export default function DisplayCartItem({ item }: { item: Product }) {
-  console.log(item)
+export default function DisplayCartItem({
+  item,
+  removeItem,
+}: {
+  item: Product
+  removeItem: (id: number) => void
+}) {
   return (
     <div
       className="flex flex-row items-center justify-between border-b-2 border-x-current 
@@ -32,8 +38,15 @@ export default function DisplayCartItem({ item }: { item: Product }) {
           <span className="text-sm">Qty: {item?.qty}</span>
         </span>
       </div>
-      <div className="cart-item-product-price font-medium">
+
+      <div className="cart-item-product-price flex flex-row items-center font-medium">
         {price(item?.price)}
+        <XMarkIcon
+          style={{ color: 'gray' }}
+          className="ml-2 h-6 w-6 cursor-pointer font-light"
+          aria-hidden="true"
+          onClick={() => removeItem(item?.id)}
+        />
       </div>
     </div>
   )

@@ -17,13 +17,11 @@ const SelectItemCount = ({ quantity, setQuantity }: SelectItemCountProps) => {
     }
   }
 
-  console.log('Rerender quantity: ', quantity)
   return (
     <div className="relative">
       <span
         className="flex w-32 items-center justify-between rounded-md border
          border-gray-200 bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        // onClick={() => setIsOpen(!isOpen)}
       >
         <button
           className="border-r-[2px] border-solid p-2 font-medium hover:bg-gray-200"
