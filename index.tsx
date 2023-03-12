@@ -5,8 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './src/App'
 import { store } from './src/redux/store'
 
-const container: HTMLElement =
-  document.getElementById('root') || document.createElement('div')
+const container = document.getElementById('root') || document.createElement('div')
 
 createRoot(container).render(
   <React.StrictMode>
