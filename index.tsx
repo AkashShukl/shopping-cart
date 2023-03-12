@@ -5,9 +5,10 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './src/App'
 import { store } from './src/redux/store'
 
-const container = document.getElementById('root')
-// const root = createRoot(container);
-createRoot(container!).render(
+const container: HTMLElement =
+  document.getElementById('root') || document.createElement('div')
+
+createRoot(container).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
