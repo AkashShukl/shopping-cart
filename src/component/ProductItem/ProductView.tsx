@@ -20,7 +20,7 @@ export default function ProuctView() {
   const [item, setItem] = useState<Product>({ qty: 1 } as Product)
 
   const setQuantity = (count: number) => {
-    setItem((item) => ({ ...item, qty: (item.qty || 1) + 1 }))
+    setItem((item) => ({ ...item, qty: count }))
   }
 
   const addToCart = () => {
