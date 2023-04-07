@@ -8,4 +8,3 @@ export default function Home() {
     </div>
   )
 }
-// https://fakestoreapi.com/products

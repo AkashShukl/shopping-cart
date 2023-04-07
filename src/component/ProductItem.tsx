@@ -43,11 +43,7 @@ export default function ProductItem({ product }: ProductProps) {
         {price(product.price)}
       </p>
 
-      <Button
-        type="button"
-        //  className="hover:opacity-7 inset-x-0 bottom-0 w-full rounded bg-gray-200 px-2 py-1 text-sm font-medium"
-        onClick={() => addToCart(product)}
-      >
+      <Button type="button" onClick={() => addToCart(product)}>
         Add To Cart
       </Button>
     </div>
